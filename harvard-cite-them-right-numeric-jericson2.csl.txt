@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" default-locale="en-GB">
+  <info>
+    <title>Harvard Style (Jericson Revised)</title>
+    <id>http://www.zotero.org/styles/harvard-style-jericson-revised</id>
+    <link href="http://www.zotero.org/styles/harvard-cite-them-right" rel="template"/>
+    <author>
+      <name>Jericson Gonzales</name>
+    </author>
+    <category citation-format="author-date"/>
+    <updated>2025-06-29T00:00:00+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/"/>
+  </info>
+
+  <macro name="author">
+    <names variable="author">
+      <name and="text" initialize-with="." delimiter=", " name-as-sort-order="all"/>
+      <label form="short" prefix=", "/>
+    </names>
+  </macro>
+
+  <macro name="editor">
+    <names variable="editor">
+      <name and="text" delimiter=", " initialize-with="."/>
+      <label form="short" prefix=" (eds.)"/>
+    </names>
+  </macro>
+
+  <macro name="title">
+    <choose>
+      <if type="article-journal article-magazine article-newspaper chapter paper-conference" match="any">
+        <text variable="title" quotes="true"/>
+      </if>
+      <else-if type="book webpage" match="any">
+        <text variable="title" font-style="italic"/>
+      </else-if>
+      <else>
+        <text variable="title"/>
+      </else>
+    </choose>
+  </macro>
+
+  <macro name="container-title">
+    <text variable="container-title" font-style="italic"/>
+  </macro>
+
+  <macro name="issued">
+    <date variable="issued">
+      <date-part name="year"/>
+    </date>
+  </macro>
+
+  <macro name="publisher">
+    <group delimiter=": ">
+      <text variable="publisher-place"/>
+      <text variable="publisher"/>
+    </group>
+  </macro>
+
+  <macro name="pages">
+    <group delimiter=" ">
+      <label variable="page" form="short"/>
+      <text variable="page"/>
+    </group>
+  </macro>
+
+  <macro name="event">
+    <group delimiter=", ">
+      <text variable="event"/>
+      <text variable="event-place"/>
+      <date variable="issued" form="text">
+        <date-part name="day"/>
+        <date-part name="month"/>
+      </date>
+    </group>
+  </macro>
+
+  <macro name="access">
+    <choose>
+      <if variable="URL">
+        <group delimiter=" ">
+          <text value="Available at:"/>
+          <text variable="URL"/>
+          <group delimiter=" ">
+            <text value="(Accessed:"/>
+            <date variable="accessed" form="text">
+              <date-part name="day"/>
+              <date-part name="month"/>
+              <date-part name="year"/>
+            </date>
+            <text value=")"/>
+          </group>
+        </group>
+      </if>
+    </choose>
+  </macro>
+
+  <macro name="doi">
+    <choose>
+      <if variable="DOI">
+        <text variable="DOI" prefix="https://doi.org/"/>
+      </if>
+    </choose>
+  </macro>
+
+  <citation>
+    <layout prefix="(" suffix=")" delimiter="; ">
+      <text variable="author"/>
+      <text macro="issued" prefix=", "/>
+    </layout>
+  </citation>
+
+  <bibliography hanging-indent="true">
+    <sort>
+      <key variable="author"/>
+      <key variable="issued"/>
+    </sort>
+    <layout suffix=".">
+      <group delimiter=". ">
+        <text macro="author"/>
+        <text macro="issued" prefix="(" suffix=")"/>
+        <text macro="title"/>
+        <choose>
+          <if type="chapter">
+            <text value="in" prefix=" " suffix=", "/>
+            <text macro="editor"/>
+            <text variable="container-title" font-style="italic"/>
+            <text macro="publisher"/>
+            <text macro="pages"/>
+          </if>
+          <else-if type="paper-conference">
+            <text variable="container-title" font-style="italic"/>
+            <text macro="event"/>
+            <text macro="publisher"/>
+            <text macro="pages"/>
+          </else-if>
+          <else>
+            <text macro="container-title"/>
+            <text macro="publisher"/>
+            <text macro="pages"/>
+          </else>
+        </choose>
+        <text macro="doi"/>
+        <text macro="access"/>
+      </group>
+    </layout>
+  </bibliography>
+</style>
